@@ -9,8 +9,9 @@
 
 Extension (skill + agents) pour **Claude Code** qui ajoute la commande `/seo`. Elle fait du **diagnostic SEO** (audit technique, contenu, backlinks, performance) et **génère des artefacts concrets** (sitemap XML, schema JSON-LD, architecture de contenu, rapports PDF).
 
+- **Version** : v2.2.0 — **25 skills**, **18 sous-agents**, **50 scripts Python**, 326 tests.
 - **Stack** : Python (scripts dans `scripts/`), pas de JavaScript.
-- **Licence** : MIT — auteur original `AgriciDaniel`.
+- **Licence** : MIT — auteur original `AgriciDaniel`. Ton fork : `github.com/yanisyano05/claude-seo`.
 - **Ce n'est pas** un projet web. C'est un outil qui s'installe dans `~/.claude/`.
 
 ---
@@ -21,6 +22,8 @@ Extension (skill + agents) pour **Claude Code** qui ajoute la commande `/seo`. E
 |---|---|---|
 | 17 sous-agents `seo-*` | `~/.claude/agents/` | ✅ **Actifs** (visibles en session) |
 | 25 skills `seo*` | `~/.claude/skills-disabled/` | ⚠️ **Désactivés** |
+
+> ⚠️ **Ton install local est ancien** (issu d'une v1.9.x : 17 agents). La v2.2.0 en ship **18** (ajout `seo-flow`). Réinstaller depuis ton fork à jour est recommandé (voir Option B).
 
 **Conséquence** : la commande `/seo` **ne fonctionne pas tant que les skills sont désactivés**. Les agents seuls ne suffisent pas à router les commandes.
 
@@ -34,9 +37,13 @@ mv ~/.claude/skills-disabled/seo* ~/.claude/skills/
 
 Option B — installer proprement en plugin (recommandé, gère les mises à jour) :
 ```bash
-# Dans Claude Code
+# Dans Claude Code — depuis ton fork à jour (v2.2.0)
+/plugin marketplace add yanisyano05/claude-seo
+/plugin install claude-seo@yanisyano05-claude-seo
+
+# ou depuis l'original
 /plugin marketplace add AgriciDaniel/claude-seo
-/plugin install claude-seo@AgriciDaniel-claude-seo
+/plugin install claude-seo@agricidaniel-claude-seo
 ```
 
 Après activation, relancer Claude Code puis tester : `/seo` (doit lister les sous-commandes).
@@ -78,6 +85,12 @@ Principales : `matplotlib` (charts), `weasyprint` (PDF), `playwright` (screensho
 | `/seo hreflang <url>` | SEO international / hreflang |
 | `/seo google [cmd] <url>` | APIs Google (GSC, PageSpeed, CrUX, GA4) |
 | `/seo plan <type>` | Plan stratégique SEO par industrie |
+| `/seo content-brief <kw>` | **(v2)** Génère un brief de contenu structuré |
+| `/seo flow [cmd]` | **(v2)** Bibliothèque de prompts FLOW (41 prompts, sync GitHub) |
+| `/seo drift baseline\|compare\|history <url>` | Monitoring de régressions SEO (17 règles, SQLite) |
+| `/seo ecommerce <url>` | SEO e-commerce (schema produit, marketplaces) |
+
+> L'orchestrateur route **25 commandes** au total. Liste complète : `CLAUDE.md` → section « Commands ».
 
 ---
 
